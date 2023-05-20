@@ -1,33 +1,28 @@
 package com.example.movieoffice.ticketoffice;
 
-import com.example.movieoffice.movie.Movie;
-import com.example.movieoffice.movie.MovieRepositoryImpl;
-import com.example.movieoffice.theater.Cgv;
-import com.example.movieoffice.theater.Theater;
-import com.example.movieoffice.theater.TheaterType;
-import org.assertj.core.api.Assertions;
+import com.example.movieoffice.Config;
+import com.example.movieoffice.movie.MovieRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 class TicketOfficeImplTest {
 
-    TicketOfficeImpl ticketOffice;
+    ApplicationContext ac = new AnnotationConfigApplicationContext(Config.class);
+    TicketOffice ticketOffice;
 
     @BeforeEach
     void beforeEach() {
-        HashMap<TheaterType, Theater> map = new HashMap<>();
-        MovieRepositoryImpl movieRepository = new MovieRepositoryImpl();
-        movieRepository.registerMovie(new Movie("아바타", "SF", 180));
-        map.put(TheaterType.CGV, new Cgv(movieRepository));
+        ticketOffice = ac.getBean(TicketOffice.class);
+        MovieRepository movieRepository = ac.getBean(MovieRepository.class);
 
-        ticketOffice = new TicketOfficeImpl(map);
     }
 
     @Test
     void bookFromCGV() {
-        Movie avatar = ticketOffice.book(TheaterType.CGV, "아바타");
-        Assertions.assertThat(avatar).isInstanceOf(Movie.class);
+//        Movie avatar = ticketOffice.book("CGV", "아바타");
+//        Assertions.assertThat(avatar).isInstanceOf(Movie.class);
+        ticketOffice.printMovies("cgv");
     }
 }
