@@ -14,12 +14,12 @@ public class MovieRepositoryImpl implements MovieRepository{
     }
 
     @Override
-    public void registerMovie(Movie movie) {
+    public void save(Movie movie) {
         movies.add(movie);
     }
 
     @Override
-    public Movie getMovie(String title) {
+    public Movie retrieve(String title) {
         return this.movies.stream()
                 .filter(movie -> movie.title.equals(title))
                 .findFirst()
