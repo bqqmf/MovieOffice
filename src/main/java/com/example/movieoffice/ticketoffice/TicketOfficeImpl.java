@@ -12,29 +12,31 @@ import java.util.Map;
 @Component
 @RequiredArgsConstructor
 public class TicketOfficeImpl implements TicketOffice {
-    private final Map<TheaterType, Theater> theaterMap;
+//    private final Map<TheaterType, Theater> theaterMap;
+private final Map<String, Theater> theaterMap;
 
     @Override
-    public Movie book(TheaterType type, String title) {
+    public Movie book(String theaterName, String title) {
         return this.theaterMap
-                .get(type)
+                .get(theaterName)
                 .book(title);
     }
 
     @Override
-    public void printMovies(TheaterType type) {
-        /*this.theaters.stream()
-                .filter(theater -> type.equals(theater.getType()))
+    public void printMovies(String theaterName) {
+        Theater theater = theaterMap.entrySet().stream()
+                .filter(entry -> entry.getValue().getType().name().equalsIgnoreCase(theaterName))
                 .findFirst()
-                .orElseThrow(
-                        () -> new IllegalArgumentException(type + "영화관이 존재하지 않습니다."))
-                .printMovies();*/
+                .orElseThrow(() -> new IllegalArgumentException(theaterName + "영화관이 존재하지 않습니다."))
+                .getValue();
+        theater.printMovies();
     }
 
     @Override
     public void printTheaters() {
-        /*for (Theater theater : theaters) {
-            System.out.println("theater = " + theater);
-        }*/
+        for (Map.Entry<String, Theater> entry : theaterMap.entrySet()) {
+            System.out.println("entry.getKey() = " + entry.getKey());
+            System.out.println("entry.getValue() = " + entry.getValue());
+        }
     }
 }
