@@ -24,9 +24,9 @@ public class Cgv implements Theater {
 
     @Override
     public Movie book(Long id, String title) {
-        Customer customer = customerRepository.retrieve(id); // id 로 고객 조회
-        plusMoney(customer); // 손님에게 받은 돈 추가
-        return movieRepository.retrieve(title); // 영화 리턴
+        Customer customer = this.findCustomer(id); // id 로 고객 조회
+        this.plusMoney(customer); // 손님에게 받은 돈 추가
+        return this.findMovie(title); // 영화 리턴
     }
 
     @Override
