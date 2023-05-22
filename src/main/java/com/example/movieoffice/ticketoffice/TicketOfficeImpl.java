@@ -2,7 +2,6 @@ package com.example.movieoffice.ticketoffice;
 
 import com.example.movieoffice.movie.Movie;
 import com.example.movieoffice.theater.Theater;
-import com.example.movieoffice.theater.TheaterType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
