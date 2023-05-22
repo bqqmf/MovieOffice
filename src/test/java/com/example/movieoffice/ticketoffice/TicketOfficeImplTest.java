@@ -9,20 +9,19 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 class TicketOfficeImplTest {
 
-    ApplicationContext ac = new AnnotationConfigApplicationContext(Config.class);
     TicketOffice ticketOffice;
 
     @BeforeEach
     void beforeEach() {
+        ApplicationContext ac = new AnnotationConfigApplicationContext(Config.class);
         ticketOffice = ac.getBean(TicketOffice.class);
-        MovieRepository movieRepository = ac.getBean(MovieRepository.class);
+
+
 
     }
 
     @Test
-    void bookFromCGV() {
-//        Movie avatar = ticketOffice.book("CGV", "아바타");
-//        Assertions.assertThat(avatar).isInstanceOf(Movie.class);
-        ticketOffice.printMovies("cgv");
+    void bookAvatarFromCGV() {
+        ticketOffice.book("cgv", 200L, "아바타");
     }
 }
