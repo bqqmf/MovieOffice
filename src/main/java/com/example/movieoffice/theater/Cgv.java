@@ -25,7 +25,7 @@ public class Cgv implements Theater {
     @Override
     public Movie book(Long id, String title) {
         Customer customer = customerRepository.retrieve(id); // id 로 고객 조회
-        this.money += this.moviePrice - this.getDiscountPrice(customer, moviePrice); // 영화관이 받은 돈 증가
+        plusMoney(customer); // 손님에게 받은 돈 추가
         return movieRepository.retrieve(title); // 영화 리턴
     }
 
@@ -69,5 +69,9 @@ public class Cgv implements Theater {
     @Override
     public int getDiscountPrice(Customer customer, int price) {
         return discountPolicy.discount(customer, price);
+    }
+
+    private void plusMoney(Customer customer) {
+        this.money += this.getDiscountPrice(customer, moviePrice);
     }
 }
