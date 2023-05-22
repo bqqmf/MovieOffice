@@ -1,7 +1,6 @@
 package com.example.movieoffice.ticketoffice;
 
 import com.example.movieoffice.movie.Movie;
-import com.example.movieoffice.theater.TheaterType;
 
 public interface TicketOffice {
 //    void setTheater(TheaterType type); // 영화관 종류로 영화관 설정
