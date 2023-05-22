@@ -12,9 +12,9 @@ public class RateDiscountPolicy implements DiscountPolicy {
     @Override
     public int discount(Customer customer, int price) {
         return switch (customer.getGrade()) {
-            case VIP -> price * 2 * rateDiscountRatio / 100;
-            case GOLD -> price * rateDiscountRatio / 100;
-            default -> 0;
+            case VIP -> price * (100 - 2 * rateDiscountRatio) / 100;
+            case GOLD -> price * (100 - rateDiscountRatio) / 100;
+            default -> price;
         };
     }
 }

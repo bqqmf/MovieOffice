@@ -16,7 +16,7 @@ public class FixDiscountPolicy implements DiscountPolicy {
         return switch (customer.getGrade()) {
             case VIP -> moviePrice - 2 * fixDiscountAmount;
             case GOLD -> moviePrice - fixDiscountAmount;
-            default -> 0;
+            default -> moviePrice;
         };
     }
 }
