@@ -22,8 +22,7 @@ public class Cgv implements Theater {
 
     @Override
     public void printMovies() {
-        List<Movie> movies = movieRepository.getMovies();
-        for (Movie movie : movies) {
+        for (Movie movie : this.getMovies()) {
             System.out.println("movie = " + movie);
         }
     }
@@ -35,7 +34,7 @@ public class Cgv implements Theater {
 
     @Override
     public List<Movie> getMovies() {
-        return movieRepository.getMovies();
+        return this.movieRepository.getMovies();
     }
 
     @Override
