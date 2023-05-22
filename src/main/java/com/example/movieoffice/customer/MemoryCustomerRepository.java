@@ -13,6 +13,10 @@ import java.util.Map;
 public class MemoryCustomerRepository implements CustomerRepository {
     private final Map<Long, Customer> customerMap = new HashMap<>();
 
+    {
+        customerMap.put(100L, new Customer("홍길동", 100L, Grade.VIP));
+    }
+
     @Override
     public void save(Customer customer) {
         customerMap.put(customer.getId(), customer);
