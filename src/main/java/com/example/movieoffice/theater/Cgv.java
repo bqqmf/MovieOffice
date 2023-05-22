@@ -1,5 +1,8 @@
 package com.example.movieoffice.theater;
 
+import com.example.movieoffice.customer.Customer;
+import com.example.movieoffice.customer.CustomerRepository;
+import com.example.movieoffice.discount.DiscountPolicy;
 import com.example.movieoffice.movie.Movie;
 import com.example.movieoffice.movie.MovieRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,13 +14,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Cgv implements Theater {
     private final MovieRepository movieRepository; // 영화들을 가지는 객체
+    private final CustomerRepository customerRepository; // 손님 정보를 갖는 객체
+    private final DiscountPolicy discountPolicy; // 할인 가격을 알려주는 객체
+
     private final TheaterType type = TheaterType.CGV; // 영화관 종류
     private final int moviePrice = 10000; // 영화 가격
+    private int money = 0; // 영화관이 가진 돈
 
 
     @Override
-    public Movie book(String title) {
-        return movieRepository.retrieve(title);
+    public Movie book(Long id, String title) {
+        Customer customer = customerRepository.retrieve(id); // id 로 고객 조회
+        this.money += this.moviePrice - this.getDiscountPrice(customer, moviePrice); // 영화관이 받은 돈 증가
+        return movieRepository.retrieve(title); // 영화 리턴
     }
 
     @Override
@@ -45,5 +54,20 @@ public class Cgv implements Theater {
     @Override
     public Movie findMovie(String title) {
         return this.movieRepository.retrieve(title);
+    }
+
+    @Override
+    public void join(Customer customer) {
+        this.customerRepository.save(customer);
+    }
+
+    @Override
+    public Customer findCustomer(Long customerId) {
+        return this.customerRepository.retrieve(customerId);
+    }
+
+    @Override
+    public int getDiscountPrice(Customer customer, int price) {
+        return discountPolicy.discount(customer, price);
     }
 }
