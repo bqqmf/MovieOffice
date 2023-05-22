@@ -1,9 +1,12 @@
 package com.example.movieoffice.customer;
 
+import lombok.Getter;
+
+@Getter
 public class Customer {
-    String name;
-    Long id;
-    Grade grade;
+    private final String name;
+    private final Long id;
+    private final Grade grade;
 
     public Customer(String name, Long id, Grade grade) {
         this.name = name;
