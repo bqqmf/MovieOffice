@@ -1,5 +1,6 @@
 package com.example.movieoffice.movie;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -10,12 +11,12 @@ public class MovieRepositoryImpl implements MovieRepository{
     private final List<Movie> movies = new ArrayList<>();
     @Override
     public List<Movie> getMovies() {
-        return movies;
+        return this.movies;
     }
 
     @Override
     public void save(Movie movie) {
-        movies.add(movie);
+        this.movies.add(movie);
     }
 
     @Override
