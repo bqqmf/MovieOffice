@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Scope("prototype")
-
 @Component
 public class DBCustomerRepository implements CustomerRepository {
     private final Map<Long, Customer> customerMap = new HashMap<>();
