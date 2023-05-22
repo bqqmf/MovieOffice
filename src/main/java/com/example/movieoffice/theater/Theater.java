@@ -1,11 +1,12 @@
 package com.example.movieoffice.theater;
 
-import com.example.movieoffice.customer.Customer;
 import com.example.movieoffice.movie.Movie;
 
 import java.util.List;
 
 public interface Theater {
+    static final TheaterType type = null;
+
     Movie book(String title); // 제목으로 영화 예매
     void printMovies(); // 상영중인 영화 목록 출력
     TheaterType getType(); // 영화관 종류 반환
@@ -18,4 +19,7 @@ public interface Theater {
 
     Movie findMovie(String title); // 영화 검색
 
+    enum TheaterType {
+        CGV, MEGA, LOTTE
+    }
 }
