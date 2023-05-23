@@ -25,7 +25,7 @@ public class Mega implements Theater {
     @Override
     public Movie book(Long id, String title) {
         Customer customer = customerRepository.retrieve(id); // id 로 고객 조회
-        this.money += this.moviePrice - this.getDiscountPrice(customer, moviePrice); // 영화관이 받은 돈 증가
+        this.money += this.moviePrice - this.getDiscountedPrice(customer, moviePrice); // 영화관이 받은 돈 증가
         return movieRepository.retrieve(title); // 영화 리턴
     }
 
@@ -52,22 +52,19 @@ public class Mega implements Theater {
     }
 
     @Override
-    public Movie findMovie(String title) {
-        return this.movieRepository.retrieve(title);
-    }
-
-    @Override
     public void join(Customer customer) {
         this.customerRepository.save(customer);
     }
 
-    @Override
-    public Customer findCustomer(Long customerId) {
+    private Movie findMovie(String title) {
+        return this.movieRepository.retrieve(title);
+    }
+
+    private Customer findCustomer(Long customerId) {
         return this.customerRepository.retrieve(customerId);
     }
 
-    @Override
-    public int getDiscountPrice(Customer customer, int price) {
+    private int getDiscountedPrice(Customer customer, int price) {
         return discountPolicy.discount(customer, price);
     }
 }
