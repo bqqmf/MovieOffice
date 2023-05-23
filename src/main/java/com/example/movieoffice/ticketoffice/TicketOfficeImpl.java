@@ -22,11 +22,7 @@ private final Map<String, Theater> theaterMap;
 
     @Override
     public void printMovies(String theaterName) {
-        theaterMap.entrySet().stream()
-                .filter(entry -> entry.getValue().getType().name().equalsIgnoreCase(theaterName))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(theaterName + "영화관이 존재하지 않습니다."))
-                .getValue()
+        theaterMap.get(theaterName.toLowerCase())
                 .printMovies();
     }
 
