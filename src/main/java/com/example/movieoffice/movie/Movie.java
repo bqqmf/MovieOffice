@@ -1,13 +1,14 @@
 package com.example.movieoffice.movie;
 
-public class Movie {
-    String title; // 영화 제목
-    String genre; // 영화 장르
-    Integer runningTime; // 상영 시간
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-    public Movie(String title, String genre, Integer runningTime) {
-        this.title = title;
-        this.genre = genre;
-        this.runningTime = runningTime;
-    }
+@Getter
+@RequiredArgsConstructor
+public class Movie {
+    private final String title; // 영화 제목
+    private final String genre; // 영화 장르
+    private final Integer runningTime; // 상영 시간
+
+
 }
