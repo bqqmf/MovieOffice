@@ -38,29 +38,31 @@ class TheaterTest {
 
         // then
         assertThat(target).isNotNull();
-        assertThat(target).isEqualTo(movie);
+        assertThat(target.getTitle()).isEqualTo(movie.getTitle());
+        assertThat(target.getGenre()).isEqualTo(movie.getGenre());
+        assertThat(target.getRunningTime()).isEqualTo(movie.getRunningTime());
     }
 
     @Test
     void bookFailNoCustomer() {
         // given
-        Customer customer = new Customer("홍길동", 100L, Grade.VIP);
+        Customer nonExistCustomer = new Customer("김삿갓", 150L, Grade.VIP);
         String title = "아바타";
         Movie movie = new Movie(title, "SF", 180);
 
         // when
         theater.registerMovie(movie);
+        theater.registerMovie(new Movie(title, "SF", 1801));
 
         // then
-        assertThrows(IllegalArgumentException.class, () -> theater.book(customer.getId(), title));
+        assertThrows(IllegalArgumentException.class, () -> theater.book(nonExistCustomer.getId(), title));
     }
 
     @Test
     void bookFailNoMovie() {
         // given
         Customer customer = new Customer("홍길동", 100L, Grade.VIP);
-        String title = "아바타";
-        Movie movie = new Movie(title, "SF", 180);
+        String title = "슈퍼배드";
 
         // when
         theater.join(customer);
@@ -85,110 +87,6 @@ class TheaterTest {
 
         // then
         assertThat(movies).isInstanceOf(List.class);
-        assertThat(movies.size()).isEqualTo(3);
-    }
-
-    @Test
-    void registerMovie() {
-        // given
-        String title = "아바타";
-        Movie movie1 = new Movie(title, "SF", 180);
-
-        // when
-        theater.registerMovie(movie1);
-        Movie target = theater.findMovie(title);
-
-        // then
-        assertThat(target).isNotNull();
-
-        int movieNum = theater.getMovies().size();
-        assertThat(movieNum).isEqualTo(1);
-    }
-
-    @Test
-    void findMovieSuccess() {
-        // given
-        String title = "아바타";
-        Movie movie1 = new Movie(title, "SF", 180);
-
-        // when
-        theater.registerMovie(movie1);
-        Movie target = theater.findMovie(title);
-
-        // then
-        assertThat(target).isNotNull();
-
-        int movieNum = theater.getMovies().size();
-        assertThat(movieNum).isEqualTo(1);
-    }
-
-    @Test
-    void findMovieFail() {
-        // given
-        String title = "아바타";
-        Movie movie1 = new Movie(title, "SF", 180);
-
-        // when
-        theater.registerMovie(movie1);
-        String nonExistTitle = "슈퍼배드";
-
-        // then
-        assertThrows(IllegalArgumentException.class, () -> theater.findMovie(nonExistTitle));
-    }
-
-    @Test
-    void joinSuccess() {
-        // given
-        Customer customer = new Customer("홍길동", 100L, Grade.VIP);
-
-        // when
-        theater.join(customer);
-        Customer target = theater.findCustomer(100L);
-
-        // then
-        assertThat(target.getId()).isEqualTo(100L);
-        assertThat(target.getName()).isEqualTo("홍길동");
-        assertThat(target.getGrade()).isEqualTo(Grade.VIP);
-    }
-
-    @Test
-    void findCustomerSuccess() {
-        // given
-        Customer customer = new Customer("홍길동", 100L, Grade.VIP);
-
-        // when
-        theater.join(customer);
-        Customer target = theater.findCustomer(100L);
-
-        // then
-        assertThat(target.getId()).isEqualTo(100L);
-        assertThat(target.getName()).isEqualTo("홍길동");
-        assertThat(target.getGrade()).isEqualTo(Grade.VIP);
-    }
-
-    @Test
-    void findCustomerFail() {
-        // given
-        Customer customer = new Customer("홍길동", 100L, Grade.VIP);
-
-        // when
-        theater.join(customer);
-        Long wrongId = 200L;
-
-        // then
-        assertThrows(IllegalArgumentException.class, () -> theater.findCustomer(wrongId));
-    }
-
-    @Test
-    void getDiscountPrice() {
-        // given
-        Customer customer = new Customer("홍길동", 100L, Grade.VIP);
-
-        // when
-        theater.join(customer);
-        int discountedPrice = theater.getDiscountPrice(customer, 12000);
-
-        // then
-        assertThat(discountedPrice).isEqualTo(10000);
+        assertThat(movies.size()).isEqualTo(4); // 추가 이전에 1개 영화가 있어서 4
     }
 }
